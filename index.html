@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For Ocha ♡</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Georgia, serif;
+        background: linear-gradient(135deg, #f9dce6, #fff1df, #eadff7);
+        color: #704753;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-x: hidden;
+        padding: 25px 15px;
+      }
+
+      .heart {
+        position: fixed;
+        bottom: -40px;
+        color: #d77f9b;
+        opacity: 0.7;
+        pointer-events: none;
+        animation: floatUp linear forwards;
+        z-index: 0;
+      }
+
+      @keyframes floatUp {
+        to {
+          transform: translateY(-115vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      .container {
+        width: 100%;
+        max-width: 570px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .intro {
+        animation: fadeIn 1.2s ease;
+      }
+
+      .intro h1 {
+        font-size: clamp(35px, 8vw, 52px);
+        color: #b65f7a;
+        margin-bottom: 10px;
+      }
+
+      .intro p {
+        font-size: 16px;
+        line-height: 1.8;
+      }
+
+      .envelope-area {
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 800px;
+        margin: 20px 0;
+      }
+
+      .envelope {
+        width: 210px;
+        height: 135px;
+        position: relative;
+        cursor: pointer;
+        background: #d98ba2;
+        border-radius: 6px;
+        box-shadow: 0 15px 30px #9c526d35;
+        transition: transform 0.4s;
+      }
+
+      .envelope:hover {
+        transform: translateY(-7px);
+      }
+
+      .envelope::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: #e9a8ba;
+        clip-path: polygon(0 0, 50% 58%, 100% 0);
+        transform-origin: top;
+        transition: transform 0.8s;
+        z-index: 3;
+      }
+
+      .envelope.open::before {
+        transform: rotateX(180deg);
+      }
+
+      .envelope::after {
+        content: "♡";
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        font-size: 35px;
+        color: white;
+        z-index: 4;
+        transition: opacity 0.3s;
+      }
+
+      .envelope.open::after {
+        opacity: 0;
+      }
+
+      .letter {
+        display: none;
+        background: #fffaf4;
+        padding: clamp(25px, 6vw, 42px);
+        border-radius: 5px 5px 22px 22px;
+        border: 1px solid #efd5d7;
+        box-shadow: 0 20px 50px #81536520;
+        animation: letterIn 1s ease both;
+        position: relative;
+      }
+
+      .letter::before {
+        content: "";
+        position: absolute;
+        width: 90px;
+        height: 20px;
+        background: #edb9c5a8;
+        top: -9px;
+        left: calc(50% - 45px);
+        transform: rotate(-3deg);
+      }
+
+      .letter h2 {
+        font-size: clamp(32px, 8vw, 47px);
+        color: #b65f7a;
+        font-style: italic;
+        margin: 15px 0 25px;
+      }
+
+      .letter p {
+        line-height: 1.9;
+        font-size: 16px;
+      }
+
+      .eyebrow {
+        font:
+          11px Arial,
+          sans-serif;
+        letter-spacing: 3px;
+        color: #b65f7a;
+      }
+
+      button {
+        background: #bd6983;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        padding: 13px 22px;
+        font-size: 14px;
+        cursor: pointer;
+        margin: 12px 0;
+        transition: 0.3s;
+        box-shadow: 0 5px 14px #bd698330;
+      }
+
+      button:hover {
+        transform: translateY(-3px);
+        background: #a94f6d;
+      }
+
+      #secret {
+        display: none;
+        background: #fbe7e9;
+        border-radius: 15px;
+        padding: 18px;
+        margin-top: 15px;
+        animation: fadeIn 0.8s ease;
+      }
+
+      .signature {
+        color: #bd6983;
+        font-style: italic;
+        font-size: 20px;
+        margin-top: 25px;
+      }
+
+      .small {
+        font:
+          11px Arial,
+          sans-serif;
+        color: #ae8792;
+        letter-spacing: 2px;
+        margin-top: 22px;
+      }
+
+      #openBtn {
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 5px 14px #bd698330;
+        }
+        50% {
+          box-shadow: 0 5px 24px #bd698370;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes letterIn {
+        from {
+          opacity: 0;
+          transform: translateY(40px) scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <section class="intro" id="intro">
+        <div style="font-size: 38px">💌</div>
+        <h1>Hey, Ocha!</h1>
+        <p>
+          I made a little something for you.<br />
+          Nothing big, just a little appreciation. ♡
+        </p>
+
+        <div class="envelope-area">
+          <div class="envelope" id="envelope" onclick="openLetter()"></div>
+        </div>
+
+        <button id="openBtn" onclick="openLetter()">Open your letter ♡</button>
+        <p style="font-size: 12px; color: #a87b89">tap the envelope to open</p>
+      </section>
+
+      <section class="letter" id="letter">
+        <div style="font-size: 30px">♡</div>
+        <div class="eyebrow">A LITTLE NOTE JUST FOR YOU</div>
+
+        <h2>Thank You,<br />Ocha</h2>
+
+        <p>
+          Ocha, terima kasih ya untuk semua hal baik yang sudah kamu berikan.
+          Mungkin nggak semuanya bisa aku ungkapkan lewat kata-kata, tapi aku
+          benar-benar menghargai kehadiran, waktu, dan kebaikanmu.
+        </p>
+
+        <p>
+          Terima kasih sudah menjadi bagian dari cerita ini. Hal-hal sederhana
+          yang kamu lakukan mungkin terlihat biasa, tetapi punya arti tersendiri
+          buatku.
+        </p>
+
+        <p>
+          Semoga semua kebaikan yang kamu berikan kembali kepadamu dalam bentuk
+          kebahagiaan yang berlipat ganda. Kamu pantas mendapatkan banyak hal
+          baik.
+        </p>
+
+        <button onclick="toggleSecret()" id="secretBtn">
+          There's one more thing ♡
+        </button>
+
+        <div id="secret">
+          <div style="font-size: 28px">🤍</div>
+          <p>
+            Intinya, terima kasih sudah menjadi Ocha. Tetap jadi dirimu sendiri,
+            ya. Aku menghargai kamu lebih dari yang mungkin bisa dijelaskan oleh
+            pesan singkat ini.
+          </p>
+          <p>
+            Semoga kamu selalu menemukan alasan untuk tersenyum, bahkan di
+            hari-hari yang terasa berat.
+          </p>
+          <p><b>You deserve all the good things in this world.</b></p>
+        </div>
+
+        <div class="signature">With gratitude, always ♡</div>
+        <div class="small">MADE WITH LOVE, JUST FOR YOU</div>
+      </section>
+    </div>
+
+    <script>
+      let opened = false;
+
+      function openLetter() {
+        if (opened) return;
+        opened = true;
+
+        document.getElementById("envelope").classList.add("open");
+        document.getElementById("openBtn").textContent = "Opening... ♡";
+
+        setTimeout(() => {
+          document.getElementById("intro").classList.add("hidden");
+          document.getElementById("letter").style.display = "block";
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          createHearts();
+        }, 900);
+      }
+
+      function toggleSecret() {
+        const secret = document.getElementById("secret");
+        const btn = document.getElementById("secretBtn");
+        const isOpen = secret.style.display === "block";
+
+        secret.style.display = isOpen ? "none" : "block";
+        btn.textContent = isOpen
+          ? "There's one more thing ♡"
+          : "Close the secret ♡";
+      }
+
+      function createHearts() {
+        const symbols = ["♡", "♥", "✧", "✿"];
+
+        setInterval(() => {
+          const heart = document.createElement("div");
+          heart.className = "heart";
+          heart.textContent =
+            symbols[Math.floor(Math.random() * symbols.length)];
+
+          heart.style.left = Math.random() * 100 + "vw";
+          heart.style.fontSize = 14 + Math.random() * 20 + "px";
+          heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), 10000);
+        }, 500);
+      }
+
+      // Hati kecil sudah melayang sejak halaman dibuka
+      createHearts();
+    </script>
+  </body>
+</html>
